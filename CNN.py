@@ -9,7 +9,7 @@ from torch.utils.data import DataLoader
 
 batch_size = 256
 learing_rate = 0.0002
-num_epoch = 3
+num_epoch = 1
 
 mnist_train = dset.MNIST('./',train=True, transform = transforms.ToTensor(),
                          target_transform=None, download= True
@@ -19,8 +19,8 @@ mnist_test = dset.MNIST('./',train=False, transform = transforms.ToTensor(),
                          target_transform=None, download= True
                          )
 
-train_loader = torch.utils.data.DataLoader(mnist_train, batch_size= batch_size,shuffle=True,num_workers=0,drop_last=True)
-test_loader = torch.utils.data.DataLoader(mnist_test, batch_size=batch_size, shuffle=True, num_workers=0, drop_last=True)
+train_loader = torch.utils.data.DataLoader(mnist_train, batch_size= batch_size,shuffle=True,num_workers=2,drop_last=True)
+test_loader = torch.utils.data.DataLoader(mnist_test, batch_size=batch_size, shuffle=True, num_workers=2, drop_last=True)
 
 
 
@@ -85,6 +85,10 @@ with torch.no_grad() :
 
         output = model.forward(x)
         _,output_index = torch.max(output,1)
+
+        print(output)
+        print(output_index)
+        print(y_)
 
         total += label.size(0)
         correct += (output_index == y_).sum().float()
